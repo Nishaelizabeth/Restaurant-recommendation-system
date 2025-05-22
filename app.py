@@ -6,6 +6,7 @@ def create_app():
     configure_routes(app)
     return app
 
+app = create_app()  # <-- ADD THIS
+
 if __name__ == '__main__':
-    app = create_app()
     app.run(debug=True)
