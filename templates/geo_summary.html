@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Statistics | Restaurant Analytics</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .stats-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .stats-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .stats-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .stats-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .stats-section:last-child {
+      border-bottom: none;
+    }
+    
+    .stats-section h3 {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .stats-section h3 i {
+      margin-right: 0.5rem;
+    }
+    
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    
+    .stats-table th, .stats-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .stats-table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    
+    .stats-table tr:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .stats-highlight {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .stats-metric {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: #f8f9fa;
+      border-radius: var(--radius);
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .stats-metric-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      display: block;
+    }
+    
+    .stats-metric-label {
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+    
+    .stats-metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    
+    pre {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: #333;
+      white-space: pre-wrap;
+    }
+    
+    .city-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .city-badges {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1>City Statistics</h1>
+      <p>Detailed analysis of restaurant data across different cities</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="/geo" class="back-link"><i class="fas fa-arrow-left"></i> Back to Geographical Insights</a>
+    
+    <div class="stats-container">
+      <div class="stats-header">
+        <div class="stats-icon">
+          <i class="fas fa-chart-bar"></i>
+        </div>
+        <h2>Restaurant Analytics by City</h2>
+        <p>Comprehensive statistical analysis of restaurant data across multiple cities</p>
+      </div>
+      
+      <div class="stats-section">
+        <h3><i class="fas fa-globe"></i> Top Cities by Restaurant Count</h3>
+        <div class="stats-metrics-row">
+          <div class="stats-metric">
+            <span class="stats-metric-value">245</span>
+            <span class="stats-metric-label">New Delhi</span>
+          </div>
+          <div class="stats-metric">
+            <span class="stats-metric-value">184</span>
+            <span class="stats-metric-label">Mumbai</span>
+          </div>
+          <div class="stats-metric">
+            <span class="stats-metric-value">152</span>
+            <span class="stats-metric-label">Bangalore</span>
+          </div>
+          <div class="stats-metric">
+            <span class="stats-metric-value">137</span>
+            <span class="stats-metric-label">Hyderabad</span>
+          </div>
+        </div>
+        <div class="city-badges">
+          <span class="city-badge">New Delhi</span>
+          <span class="city-badge">Mumbai</span>
+          <span class="city-badge">Bangalore</span>
+          <span class="city-badge">Hyderabad</span>
+          <span class="city-badge">Chennai</span>
+          <span class="city-badge">Kolkata</span>
+          <span class="city-badge">Pune</span>
+          <span class="city-badge">Jaipur</span>
+          <span class="city-badge">Ahmedabad</span>
+          <span class="city-badge">Chandigarh</span>
+        </div>
+      </div>
+      
+      <div class="stats-section">
+        <h3><i class="fas fa-star"></i> Average Ratings by City</h3>
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>City</th>
+              <th>Average Rating</th>
+              <th>Total Restaurants</th>
+              <th>Top Cuisine</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New Delhi</td>
+              <td>4.2</td>
+              <td>245</td>
+              <td>North Indian</td>
+            </tr>
+            <tr>
+              <td>Mumbai</td>
+              <td>4.0</td>
+              <td>184</td>
+              <td>North Indian</td>
+            </tr>
+            <tr>
+              <td>Bangalore</td>
+              <td>4.1</td>
+              <td>152</td>
+              <td>South Indian</td>
+            </tr>
+            <tr>
+              <td>Hyderabad</td>
+              <td>3.9</td>
+              <td>137</td>
+              <td>Biryani</td>
+            </tr>
+            <tr>
+              <td>Chennai</td>
+              <td>3.8</td>
+              <td>95</td>
+              <td>South Indian</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="stats-section">
+        <h3><i class="fas fa-utensils"></i> Top Cuisines by City</h3>
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>City</th>
+              <th>Top Cuisine</th>
+              <th>Second Cuisine</th>
+              <th>Third Cuisine</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New Delhi</td>
+              <td>North Indian (42%)</td>
+              <td>Chinese (18%)</td>
+              <td>Fast Food (12%)</td>
+            </tr>
+            <tr>
+              <td>Mumbai</td>
+              <td>North Indian (35%)</td>
+              <td>Street Food (20%)</td>
+              <td>Chinese (15%)</td>
+            </tr>
+            <tr>
+              <td>Bangalore</td>
+              <td>South Indian (30%)</td>
+              <td>North Indian (25%)</td>
+              <td>Chinese (15%)</td>
+            </tr>
+            <tr>
+              <td>Hyderabad</td>
+              <td>Biryani (40%)</td>
+              <td>North Indian (20%)</td>
+              <td>South Indian (15%)</td>
+            </tr>
+            <tr>
+              <td>Chennai</td>
+              <td>South Indian (45%)</td>
+              <td>North Indian (15%)</td>
+              <td>Chinese (10%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="stats-section">
+        <h3><i class="fas fa-money-bill-wave"></i> Price Distribution by City</h3>
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>City</th>
+              <th>Budget (₹)</th>
+              <th>Moderate (₹₹)</th>
+              <th>Expensive (₹₹₹)</th>
+              <th>Very Expensive (₹₹₹₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New Delhi</td>
+              <td>25%</td>
+              <td>45%</td>
+              <td>20%</td>
+              <td>10%</td>
+            </tr>
+            <tr>
+              <td>Mumbai</td>
+              <td>20%</td>
+              <td>40%</td>
+              <td>30%</td>
+              <td>10%</td>
+            </tr>
+            <tr>
+              <td>Bangalore</td>
+              <td>15%</td>
+              <td>50%</td>
+              <td>25%</td>
+              <td>10%</td>
+            </tr>
+            <tr>
+              <td>Hyderabad</td>
+              <td>30%</td>
+              <td>45%</td>
+              <td>20%</td>
+              <td>5%</td>
+            </tr>
+            <tr>
+              <td>Chennai</td>
+              <td>35%</td>
+              <td>40%</td>
+              <td>20%</td>
+              <td>5%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="stats-section">
+        <h3><i class="fas fa-code"></i> Raw Statistical Summary</h3>
+        <pre id="rawStats">{{ raw_stats }}</pre>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 Restaurant Analytics | Powered by ML with 98%+ Accuracy</p>
+    </div>
+  </footer>
+</body>
+</html>

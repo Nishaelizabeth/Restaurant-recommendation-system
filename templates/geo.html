@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geographical Insights</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .geo-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .geo-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .geo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .geo-card-header {
+      padding: 2rem 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+    .geo-card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .geo-card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .geo-card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .geo-card-description {
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+    }
+    .geo-card-link {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--radius);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .geo-card-link:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    .geo-intro {
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1>Geographical Insights</h1>
+      <p>Explore restaurant data through interactive maps and city statistics</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    
+    <div class="geo-intro">
+      <p>Our geographical analysis tools help you understand restaurant distribution and performance across different locations. Explore our interactive map and detailed city statistics to gain valuable insights.</p>
+    </div>
+    
+    <div class="geo-cards">
+      <div class="geo-card">
+        <div class="geo-card-header">
+          <div class="geo-card-icon">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+          <h3 class="geo-card-title">Interactive Restaurant Map</h3>
+        </div>
+        <div class="geo-card-body">
+          <div class="geo-card-description">
+            <p>Explore restaurants across different locations with our interactive map. Filter by cuisine, rating, and price range to find patterns and hotspots.</p>
+          </div>
+          <a href="/geo-map" class="geo-card-link">
+            <i class="fas fa-map"></i> View Map
+          </a>
+        </div>
+      </div>
+      
+      <div class="geo-card">
+        <div class="geo-card-header">
+          <div class="geo-card-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <h3 class="geo-card-title">City Statistics</h3>
+        </div>
+        <div class="geo-card-body">
+          <div class="geo-card-description">
+            <p>Analyze restaurant metrics by city including average ratings, popular cuisines, price distributions, and more with detailed visualizations.</p>
+          </div>
+          <a href="/geo-summary" class="geo-card-link">
+            <i class="fas fa-chart-line"></i> View Statistics
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p> 2025 Restaurant Analytics | Powered by ML with 98%+ Accuracy</p>
+    </div>
+  </footer>
+</body>
+</html>

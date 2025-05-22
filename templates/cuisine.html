@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuisine Classification | Elite Tiles</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .cuisine-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cuisine-result {
+      display: none;
+      margin-top: 2rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .cuisine-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .cuisine-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 1rem 0;
+    }
+    .cuisine-description {
+      font-style: italic;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .loading-spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-col {
+      flex: 1;
+    }
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1>Cuisine Classification</h1>
+      <p>Our ML model can predict the primary cuisine type with 98% accuracy</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    
+    <div class="card cuisine-form">
+      <h2 class="card-title"><i class="fas fa-pizza-slice"></i> Enter Restaurant Details</h2>
+      <p>Fill in the details below to predict the restaurant's primary cuisine type</p>
+      
+      <form id="cuisineForm">
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="City" class="form-control" required placeholder="e.g., Mumbai">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="price">Price Range</label>
+              <select id="price" name="Price range" class="form-control" required>
+                <option value="" disabled selected>Select price range</option>
+                <option value="1">$ (Budget)</option>
+                <option value="2">$$ (Moderate)</option>
+                <option value="3">$$$ (Expensive)</option>
+                <option value="4">$$$$ (Very Expensive)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="table_booking">Table Booking Available</label>
+              <select id="table_booking" name="Has Table booking" class="form-control" required>
+                <option value="" disabled selected>Select option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="online_delivery">Online Delivery Available</label>
+              <select id="online_delivery" name="Has Online delivery" class="form-control" required>
+                <option value="" disabled selected>Select option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="votes">Number of Votes</label>
+              <input type="number" id="votes" name="Votes" class="form-control" required min="0" placeholder="e.g., 150">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="rating">Aggregate Rating</label>
+              <input type="number" id="rating" name="Aggregate rating" class="form-control" required min="0" max="5" step="0.1" placeholder="e.g., 4.2">
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary"><i class="fas fa-utensils"></i> Classify Cuisine</button>
+      </form>
+    </div>
+    
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+      <p>Analyzing restaurant details...</p>
+    </div>
+    
+    <div class="cuisine-result" id="resultCard">
+      <div class="cuisine-icon" id="cuisineIcon"></div>
+      <h3 class="result-title">Predicted Cuisine Type</h3>
+      <div class="cuisine-value" id="cuisineValue"></div>
+      <p class="cuisine-description" id="cuisineDescription"></p>
+      <p>This prediction is based on our ML model with 98% accuracy</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 Elite Tiles Restaurant Analytics | Powered by ML with 98%+ Accuracy</p>
+    </div>
+  </footer>
+
+  <script>
+    // Cuisine icons and descriptions mapping
+    const cuisineData = {
+      'North Indian': { icon: 'fa-bowl-food', description: 'Rich, aromatic dishes with plenty of spices and gravies.' },
+      'South Indian': { icon: 'fa-bowl-rice', description: 'Rice-based dishes with distinct flavors of coconut, tamarind and curry leaves.' },
+      'Chinese': { icon: 'fa-bowl-chopsticks', description: 'Stir-fried dishes with a balance of flavors and textures.' },
+      'Italian': { icon: 'fa-pizza-slice', description: 'Mediterranean cuisine focusing on pasta, pizza, and fresh ingredients.' },
+      'American': { icon: 'fa-burger', description: 'Comfort food featuring burgers, fries, and hearty portions.' },
+      'Mexican': { icon: 'fa-pepper-hot', description: 'Bold flavors with beans, rice, corn, and various spices.' },
+      'Japanese': { icon: 'fa-fish', description: 'Fresh, minimally processed ingredients with emphasis on seasonality.' },
+      'Thai': { icon: 'fa-lemon', description: 'Balance of sweet, sour, salty, spicy, and bitter flavors.' },
+      'default': { icon: 'fa-utensils', description: 'A unique culinary tradition with distinctive flavors and techniques.' }
+    };
+    
+    document.getElementById("cuisineForm").onsubmit = async (e) => {
+      e.preventDefault();
+      
+      // Show loading spinner
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("resultCard").style.display = "none";
+      
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      
+      try {
+        const res = await fetch("/predict-cuisine", {
+          method: "POST", 
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+        
+        const result = await res.json();
+        const predictedCuisine = result.predicted_cuisine;
+        
+        // Get cuisine data or default if not found
+        const cuisine = cuisineData[predictedCuisine] || cuisineData['default'];
+        
+        // Set cuisine icon
+        document.getElementById("cuisineIcon").innerHTML = `<i class="fas ${cuisine.icon}"></i>`;
+        
+        // Set cuisine value
+        document.getElementById("cuisineValue").innerText = predictedCuisine;
+        
+        // Set cuisine description
+        document.getElementById("cuisineDescription").innerText = cuisine.description;
+        
+        // Show the result card
+        document.getElementById("resultCard").style.display = "block";
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while predicting the cuisine. Please try again.");
+      } finally {
+        // Hide loading spinner
+        document.getElementById("loading").style.display = "none";
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Recommendations</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .recommend-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .recommendations-container {
+      margin-top: 2rem;
+      display: none;
+    }
+    .recommendation-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .recommendation-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .recommendation-header {
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .recommendation-name {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin: 0;
+    }
+    .recommendation-rating {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .recommendation-body {
+      padding: 1rem;
+    }
+    .recommendation-detail {
+      display: flex;
+      margin-bottom: 0.5rem;
+      align-items: center;
+    }
+    .recommendation-detail i {
+      width: 1.5rem;
+      color: var(--primary);
+      margin-right: 0.5rem;
+    }
+    .recommendation-similarity {
+      background: #e9ecef;
+      padding: 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .loading-spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-col {
+      flex: 1;
+    }
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: var(--radius);
+      display: none;
+    }
+    .cuisine-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .cuisine-tag {
+      background: var(--light);
+      color: var(--dark);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1>Restaurant Recommendations</h1>
+      <p>Get personalized restaurant suggestions based on your preferences</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    
+    <div class="card recommend-form">
+      <h2 class="card-title"><i class="fas fa-utensils"></i> Enter Your Preferences</h2>
+      <p>Tell us what you're looking for and we'll find the perfect restaurants for you</p>
+      
+      <form id="recommendForm">
+        <div class="form-group">
+          <label for="cuisines">Cuisines (comma separated)</label>
+          <input type="text" id="cuisines" name="Cuisines" class="form-control" required placeholder="e.g., Italian, Chinese, Mexican">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="price">Price Range</label>
+              <select id="price" name="Price range" class="form-control" required>
+                <option value="" disabled selected>Select price range</option>
+                <option value="1">$ (Budget)</option>
+                <option value="2">$$ (Moderate)</option>
+                <option value="3">$$$ (Expensive)</option>
+                <option value="4">$$$$ (Very Expensive)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="City" class="form-control" required placeholder="e.g., New Delhi">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="table_booking">Table Booking</label>
+              <select id="table_booking" name="Has Table booking" class="form-control" required>
+                <option value="" disabled selected>Select option</option>
+                <option value="Yes">Required</option>
+                <option value="No">Not Required</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="online_delivery">Online Delivery</label>
+              <select id="online_delivery" name="Has Online delivery" class="form-control" required>
+                <option value="" disabled selected>Select option</option>
+                <option value="Yes">Required</option>
+                <option value="No">Not Required</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Find Restaurants</button>
+      </form>
+    </div>
+    
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+      <p>Finding the perfect restaurants for you...</p>
+    </div>
+    
+    <div class="no-results" id="noResults">
+      <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: var(--gray); margin-bottom: 1rem;"></i>
+      <h3>No Restaurants Found</h3>
+      <p>Try adjusting your preferences to get more recommendations.</p>
+    </div>
+    
+    <div class="recommendations-container" id="recommendationsContainer">
+      <h2><i class="fas fa-thumbs-up"></i> Recommended Restaurants</h2>
+      <p>Based on your preferences, we think you'll love these restaurants:</p>
+      <div id="recommendations"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 Restaurant Analytics | Powered by ML with 98%+ Accuracy</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("recommendForm").onsubmit = async (e) => {
+      e.preventDefault();
+      
+      // Show loading spinner
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("recommendationsContainer").style.display = "none";
+      document.getElementById("noResults").style.display = "none";
+      
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      
+      try {
+        const res = await fetch("/recommend", {
+          method: "POST", 
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+        
+        const result = await res.json();
+        const container = document.getElementById("recommendations");
+        
+        if (result.length === 0) {
+          // Show no results message
+          document.getElementById("noResults").style.display = "block";
+        } else {
+          // Generate recommendation cards
+          container.innerHTML = '';
+          
+          result.forEach(restaurant => {
+            // Parse cuisines into an array
+            const cuisines = restaurant.Cuisines ? restaurant.Cuisines.split(',').map(c => c.trim()) : [];
+            
+            // Create cuisine tags HTML
+            const cuisineTags = cuisines.map(cuisine => `<span class="cuisine-tag">${cuisine}</span>`).join('');
+            
+            // Create rating stars
+            const rating = restaurant['Predicted Rating'] || restaurant['Aggregate rating'] || 0;
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let starsHTML = '';
+            
+            for (let i = 0; i < 5; i++) {
+              if (i < fullStars) {
+                starsHTML += '<i class="fas fa-star"></i>';
+              } else if (i === fullStars && hasHalfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt"></i>';
+              } else {
+                starsHTML += '<i class="far fa-star"></i>';
+              }
+            }
+            
+            // Format similarity score if available
+            const similarityScore = restaurant['Similarity Score'] ? 
+              `<div class="recommendation-similarity">
+                <strong>Match Score:</strong> ${(restaurant['Similarity Score'] * 100).toFixed(0)}%
+              </div>` : '';
+            
+            // Create card HTML
+            const card = `
+              <div class="recommendation-card">
+                <div class="recommendation-header">
+                  <h3 class="recommendation-name">${restaurant['Restaurant Name']}</h3>
+                  <div class="recommendation-rating">
+                    ${starsHTML} ${rating.toFixed(1)}
+                  </div>
+                </div>
+                <div class="recommendation-body">
+                  <div class="recommendation-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${restaurant.City || 'Location not specified'}</span>
+                  </div>
+                  <div class="recommendation-detail">
+                    <i class="fas fa-utensils"></i>
+                    <div>
+                      <span>Cuisines:</span>
+                      <div class="cuisine-tags">${cuisineTags}</div>
+                    </div>
+                  </div>
+                  ${similarityScore}
+                </div>
+              </div>
+            `;
+            
+            container.innerHTML += card;
+          });
+          
+          // Show recommendations container
+          document.getElementById("recommendationsContainer").style.display = "block";
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while getting recommendations. Please try again.");
+      } finally {
+        // Hide loading spinner
+        document.getElementById("loading").style.display = "none";
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant ML Toolkit</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .card {
+      text-align: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-content {
+      flex-grow: 1;
+      margin-bottom: 1.5rem;
+    }
+    .hero-section {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">Restaurant Analytics</h1>
+      <p class="hero-subtitle">Leverage machine learning to gain insights about restaurants, predict ratings, and discover new dining experiences</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <div class="card-content">
+          <div class="feature-icon"><i class="fas fa-star"></i></div>
+          <h2 class="card-title">Predict Restaurant Rating</h2>
+          <p>Use our advanced ML model to predict restaurant ratings based on various features like location, services, and pricing.</p>
+        </div>
+        <a href="/rating" class="btn btn-primary">Try Rating Predictor</a>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+          <h2 class="card-title">Restaurant Recommendations</h2>
+          <p>Get personalized restaurant recommendations based on your preferences for cuisine, location, and dining options.</p>
+        </div>
+        <a href="/recommendation" class="btn btn-primary">Get Recommendations</a>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <div class="feature-icon"><i class="fas fa-pizza-slice"></i></div>
+          <h2 class="card-title">Cuisine Classification</h2>
+          <p>Our ML model can predict the primary cuisine type of a restaurant based on its characteristics and features.</p>
+        </div>
+        <a href="/cuisine" class="btn btn-primary">Classify Cuisine</a>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h2 class="card-title">Location-Based Insights</h2>
+          <p>Explore restaurant data geographically with interactive maps and location-based statistical analysis.</p>
+        </div>
+        <a href="/geo" class="btn btn-primary">View Geo Insights</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 Restaurant Analytics | Powered by ML with 98%+ Accuracy</p>
+    </div>
+  </footer>
+</body>
+</html>
